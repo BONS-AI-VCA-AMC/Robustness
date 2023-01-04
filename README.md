@@ -18,7 +18,6 @@ https://imagemagick.org/script/download.php
 ## Usage
 To generate the TestSet-C dataset, use the following command:
 ```
-create_testset_c 'path/to/testset/images' 'path/to/testset/masks'
+python create_testset_c.py 'path/to/testset/images' 'path/to/testset/masks'
 ```
 include the paths to masks if there are present.
-
