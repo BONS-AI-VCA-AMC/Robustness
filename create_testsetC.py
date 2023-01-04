@@ -4,7 +4,6 @@ import random
 from utils import Compose, combine_paths
 from PIL import Image
 
-
 random.seed(0)
 def create_testset_c(path_images, path_masks=None):
     """read images and check imagesize"""
