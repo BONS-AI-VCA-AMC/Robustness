@@ -101,7 +101,7 @@ def create_testset_c(path_images, path_masks=None):
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
         print('iteration ' + str(i) + ' is done')
-        print(str(nb_it-1-i) + ' iterations to go')
+        print(str(nb_it-i) + ' iterations to go')
         print('-----------------------------------')
 
     print('Testset-C is created!')
