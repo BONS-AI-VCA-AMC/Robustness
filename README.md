@@ -13,7 +13,7 @@ To install the required packages, navigate to the root directory of the reposito
 pip install -r requirements.txt
 ```
 This will install all of the necessary packages listed in the requirements.txt file. please also make sure you install the ImageMagicWand library:
-https://imagemagick.org/script/download.php#windows
+https://imagemagick.org/script/download.php
 
 ## Usage
 To generate the TestSet-C dataset, use the following command:
