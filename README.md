@@ -16,9 +16,9 @@ This will install all of the necessary packages listed in the requirements.txt f
 
 ## Usage
 To generate the TestSet-C dataset, use the following command:
-'''
+```
 create_testset_c 'path/to/testset/images' 'path/to/testset/masks'
-'''
+```
 include the paths to masks if there are present.
 
 I hope this helps! Let me know if you have any questions.
