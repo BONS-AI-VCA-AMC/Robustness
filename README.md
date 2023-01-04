@@ -10,7 +10,9 @@ git clone https://github.com/your-username/repository-name.git
 To install the required packages, navigate to the root directory of the repository and run the following command:
 
 Copy code
+```
 pip install -r requirements.txt
+```
 This will install all of the necessary packages listed in the requirements.txt file.
 
 Usage
