@@ -98,7 +98,7 @@ class ReduceResolution:
 
         res = cv2.resize(img, dsize=(shape[0] // factor, shape[1] // factor), interpolation=cv2.INTER_CUBIC)
         res = cv2.resize(res, dsize=(shape[1], shape[0]), interpolation=cv2.INTER_CUBIC)
-        res, mask, has_mask = self.normalize(res)
+        res= self.normalize(res)
 
         return res
 
@@ -150,7 +150,7 @@ class Sharpness(object):
     def __init__(self, severity=1):
         self.severity = severity
 
-    def __call__(self, img, mask, has_mask):
+    def __call__(self, img):
         c = [2.0, 4.0, 5.0, 10, 15, 20, 40, 60, 80, 100][self.severity - 1]
 
         sharpness = transforms.RandomAdjustSharpness(c, p=1)
@@ -174,7 +174,7 @@ class motion_blur(object):
     def __init__(self, severity=1):
         self.severity = severity
 
-    def __call__(self, img, mask, has_mask):
+    def __call__(self, img):
         c = [(10, 3), (24, 8), (40, 16), (70, 16), (100, 16), (100, 24), (120, 24), (120, 30), (150, 30), (200, 40)][
             self.severity - 1]
 
@@ -189,5 +189,5 @@ class motion_blur(object):
         img = cv2.imdecode(np.fromstring(img.make_blob(), np.uint8),
                            cv2.IMREAD_UNCHANGED)
 
-        return Image.fromarray(np.clip(img[..., [2, 1, 0]], 0, 255).astype(np.uint8)), mask, has_mask  # BGR to RGB
+        return Image.fromarray(np.clip(img[..., [2, 1, 0]], 0, 255).astype(np.uint8))  # BGR to RGB
 

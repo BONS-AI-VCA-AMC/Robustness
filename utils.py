@@ -7,11 +7,10 @@ class Compose:
     def __init__(self, transforms):
         self.transforms = transforms
 
-    def __call__(self, img, mask, has_mask):
+    def __call__(self, img):
         for t in self.transforms:
-            img, mask, has_mask = t(img, mask, has_mask)
-
-        return img, mask
+            img = t(img)
+        return img
 
 # Custom Resize class
 class Resize:
@@ -34,7 +33,6 @@ def combine_paths(dir, files):
     return paths
 
 
-
 # define curruptions
 def define_corruption(corruption, factor):
     corruptions = []
@@ -46,7 +44,8 @@ def define_corruption(corruption, factor):
         corruptions.append(glob_cor.GaussianNoise(factor))
         corruptions.append(glob_cor.ToPIL())
     if corruption == 'JPG':
-        corruptions.append(glob_cor.JPGcompression('/JPG_image/temporary_image.jpg', factor))
+        cwd = os.getcwd()
+        corruptions.append(glob_cor.JPGcompression(os.path.join(cwd, 'JPG_image/temporary_image.jpg'), factor))
         corruptions.append(glob_cor.ToPIL())
     if corruption == 'SpotLight - light':
         position = [(200, 200)]

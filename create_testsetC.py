@@ -7,6 +7,8 @@ from PIL import Image
 random.seed(0)
 def create_testset_c(path_images, path_masks=None):
     """read images and check imagesize"""
+
+    cwd = os.getcwd()
     images = os.listdir(path_images)
 
     print('total number of images in folder = ' + str(len(images)))
@@ -15,7 +17,7 @@ def create_testset_c(path_images, path_masks=None):
 
     for i in range(len(combined_path_images)):
         image = Image.open(combined_path_images[i])
-        shape = image.size()
+        shape = image.size
         if shape[0] < 1024 or shape[1] < 1024:
             idx_remove.append(i)
 
@@ -31,11 +33,11 @@ def create_testset_c(path_images, path_masks=None):
     factor_2 = [6,7,8,9,10,11,12,13,14,15]
 
     # save dir
-    path_save_images = '/Testset-C/Images'
+    path_save_images = os.path.join(cwd,'Testset-C/Images')
     os.makedirs(path_save_images, exist_ok=True)
 
     if path_masks != None:
-        path_save_masks = '/Testset-C/Masks'
+        path_save_masks = os.path.join(cwd,'Testset-C/Masks')
         os.makedirs(path_save_masks, exist_ok=True)
 
         masks = os.listdir((path_masks))
@@ -56,8 +58,8 @@ def create_testset_c(path_images, path_masks=None):
         for k in range(len(path_images_clean)):
             '''resize images to 1024x1024'''
 
-            image = Image.open(path_images_clean)
-            image.resize(image, (1024,1024),resample=Image.LANCZOS)
+            image = Image.open(path_images_clean[k])
+            image.resize((1024,1024),resample=Image.LANCZOS)
 
             nb_corruptions = random.randint(1,nb_per) #random number of corruptions for image
             idx_corruptions = random.sample(range(0, len(corruption_options)), nb_corruptions) #random chosen corruption
@@ -87,18 +89,26 @@ def create_testset_c(path_images, path_masks=None):
 
             name = 'image_' + str(random.randint(0,10000)) + '_'
             for i in range(len(corruptions_names)):
-                print(corruptions_names[i], factors[i])
                 name = name + corruptions_names[i] + '_' + str(factors[i]) + '_'
 
             name = name + '.png'
-            print(name)
-
             path_image = os.path.join(path_save_images, name)
             image_c.save(path_image)
 
             if path_masks != None:
-                mask = Image.open(path_masks_clean)
-                mask.resize(mask, (1024, 1024), resample=Image.NEAREST)
+                mask = Image.open(path_masks_clean[k])
+                mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
+        print('iteration ' + str(i) + ' is done')
+        print(str(nb_it-1-i) + ' iterations to go')
+        print('-----------------------------------')
+
+    print('Testset-C is created!')
+
+if __name__ == "__main__":
+    path_images = r'C:\Users\20172619\OneDrive - TU Eindhoven\PhD\jaar 1\first_experiments\Testset-C\val-set-images'
+    path_masks = r'C:\Users\20172619\OneDrive - TU Eindhoven\PhD\jaar 1\first_experiments\Testset-C\val-set-masks'
+
+    create_testset_c(path_images, path_masks=path_masks)
 
