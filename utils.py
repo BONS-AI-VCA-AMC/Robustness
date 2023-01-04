@@ -18,13 +18,13 @@ class Resize:
     def __init__(self, target_size):
         self.target_size = target_size
 
-    def __call__(self, img, mask):
+    def __call__(self, img):
         img = transforms.functional.resize(img, size=self.target_size,
                                            interpolation=transforms.InterpolationMode.LANCZOS)
         mask = transforms.functional.resize(mask, size=self.target_size,
                                             interpolation=transforms.InterpolationMode.NEAREST)
 
-        return img, mask
+        return img
 
 def combine_paths(dir, files):
     paths = []
