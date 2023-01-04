@@ -21,4 +21,3 @@ create_testset_c 'path/to/testset/images' 'path/to/testset/masks'
 ```
 include the paths to masks if there are present.
 
-I hope this helps! Let me know if you have any questions.
