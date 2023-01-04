@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import random
 from scipy.stats import norm
-from PIL import Image
 
 
 class LocalCorruptions:
