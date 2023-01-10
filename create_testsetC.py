@@ -9,7 +9,7 @@ import sys
 random.seed(0)
 
 
-def create_testset_c(path_images, path_masks=None):
+def create_testset_c(path_images, path_masks=None, levels=5):
     """read images and check imagesize"""
     cwd = os.getcwd()
     images = os.listdir(path_images)
@@ -26,8 +26,8 @@ def create_testset_c(path_images, path_masks=None):
     for i in range(len(combined_path_images)):
         image = Image.open(combined_path_images[i])
         shape = image.size
-        if shape[0] < 1024 or shape[1] < 1024:
-            idx_remove.append(i)
+    #    if shape[0] < 1024 or shape[1] < 1024:
+    #        idx_remove.append(i)
 
     print('total number of images removed because of low resolution = ' + str(len(idx_remove)))
     path_images_clean = [i for j, i in enumerate(combined_path_images) if j not in idx_remove]
@@ -40,8 +40,8 @@ def create_testset_c(path_images, path_masks=None):
     corruption_options = ['Resolution', 'JPG', 'SpotLight - light', 'Contrast', 'Brightness'
                            ,'Saturation', 'Hue', 'defocus-blur', 'Motion-blur']
 
-    factor_1 = [1,2,3,4,5]
-    factor_2 = [6,7,8,9,10,11,12,13,14,15]
+    factor_1 = list(range(1,levels+1))
+    factor_2 = list(range(11-levels, 11))+list(range(11,11+levels))
 
     # save dir
     path_save_images = os.path.join(cwd, 'Testset-C/Images')
@@ -67,7 +67,7 @@ def create_testset_c(path_images, path_masks=None):
         for k in range(len(path_images_clean)):
             '''resize images to 1024x1024'''
 
-            image = Image.open(path_images_clean[k])
+            image = Image.open(path_images_clean[k]).convert('RGB')
             image = image.resize((1024, 1024), resample=Image.LANCZOS)
 
             nb_corruptions = random.randint(1,nb_per)  # random number of corruptions for image
@@ -106,13 +106,13 @@ def create_testset_c(path_images, path_masks=None):
 
             if path_masks is not None:
                 mask = Image.open(path_masks_clean[k])
-                mask.resize((1024, 1024), resample=Image.NEAREST)
+                mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
 
         df["iteration " + str(i)] = names
 
-        print('iteration ' + str(i) + ' is done')
+        print('iteration ' + str(i+1) + ' is done')
         print(str(nb_it-(i+1)) + ' iterations to go')
         print('-----------------------------------')
 
@@ -132,5 +132,5 @@ if __name__ == "__main__":
     else:
         path_masks = None
 
-    create_testset_c(path_images, path_masks=path_masks)
+    create_testset_c(path_images, path_masks=path_masks, levels=5)
 
