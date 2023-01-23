@@ -40,14 +40,13 @@ def define_corruption(corruption, factor):
     if corruption == 'Resolution':
         corruptions.append(glob_cor.ReduceResolution(factor))
         corruptions.append(glob_cor.ToPIL())
-    if corruption == 'Gaussian-Noise':
-        corruptions.append(glob_cor.GaussianNoise(factor))
-        corruptions.append(glob_cor.ToPIL())
-    if corruption == 'JPG':
+    if corruption == 'JPEG':
         cwd = os.getcwd()
         corruptions.append(glob_cor.JPGcompression(os.path.join(cwd, 'JPG_image/temporary_image.jpg'), factor))
-        corruptions.append(glob_cor.ToPIL())
-    if corruption == 'SpotLight - light':
+    if corruption == 'JPEG2000':
+        cwd = os.getcwd()
+        corruptions.append(glob_cor.JPG2000compression(os.path.join(cwd, 'JPG_image/temporary_image.jpg'), factor))
+    if corruption == 'Overexposure':
         position = [(200, 200)]
         corruptions.append(loc_cor.LocalCorruptions(factor, mode='light', gauss_position = position))
         corruptions.append(glob_cor.ToPIL())

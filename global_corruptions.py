@@ -1,10 +1,12 @@
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image
 import cv2
 from torchvision import transforms
 from io import BytesIO
 from wand.image import Image as WandImage
 from wand.api import library as wandlibrary
+import math
+import io
 
 
 # Custom corruption classes
@@ -15,67 +17,54 @@ class Normalize:
 
 
 class JPGcompression:
-    def __init__(self, save_path, severity):
-        self.save_path = save_path
+    def __init__(self, save_path_jpg, severity):
+        self.save_path_jpg = save_path_jpg
         self.severity = severity
 
-    def normalize(self, img):
-        img_out = (img - np.min(img)) / np.ptp(img)
 
-        return img_out
-    def __call__(self, img):
-        c = [40, 35, 30, 25, 20, 12, 10, 8, 6, 4][self.severity - 1]
+    def JPEGSaveWithTargetSize(self, im, filename, target):
+        """Save the image as JPEG with the given name at best quality that makes less than "target" bytes"""
+        # Min and Max quality
+        Qmin, Qmax = 0, 100
+        # Highest acceptable quality found
+        Qacc = -1
+        while Qmin <= Qmax:
+            m = math.floor((Qmin + Qmax) / 2)
 
-        quality = c
+            # Encode into memory and get size
+            buffer = io.BytesIO()
+            im.save(buffer, format="JPEG", quality=m)
+            s = buffer.getbuffer().nbytes
+            compress_ratio = (self.shape[0] * self.shape[1]) / s
 
-        img.save(self.save_path, format='JPEG', quality=quality)
-        img_jpg = Image.open(self.save_path)
+            if compress_ratio >= target:
+                Qacc = m
+                Qmin = m + 1
+            elif compress_ratio < target:
+                Qmax = m - 1
 
-        img = self.normalize(np.array(img_jpg))
-
-        return img
+        # Write to disk at the defined quality
+        if Qacc > 1:
+            im.save(filename, format="JPEG", quality=Qacc)
+        else:
+            im.save(filename, format="JPEG", quality=1)
 
 
 class JPG2000compression:
-    def __init__(self, save_path, quality=100):
+    def __init__(self, save_path, severity=0):
         self.save_path = save_path
-        self.quality = quality
-
-    def normalize(self, img):
-        img_out = (img - np.min(img)) / np.ptp(img)
-
-        return img_out
-
-    def __call__(self, img):
-        img = (img * 255).astype(np.uint8)
-        img = Image.fromarray(img)
-        img.save(self.save_path, format='JP2', quality=self.quality)
-        img_jpg = Image.open(self.save_path)
-
-        img = self.normalize(np.array(img_jpg))
-
-        return img
-
-
-class GaussianNoise:
-    def __init__(self, severity):
         self.severity = severity
 
-    def normalize(self, img):
-        img_out = (img - np.min(img)) / np.ptp(img)
-        return img_out
-
     def __call__(self, img):
-        c = [0.05, 0.1, 0.13, 0.16, 0.2, 0.3, 0.4, 0.6, 0.8, 1][self.severity - 1]
 
-        noise_factor = c
+        c = [[4],[12],[20],[28],[34],[40],[46],[50],[54],[58]][self.severity - 1]
+        rate = c
 
-        img = self.normalize(np.array(img))
+        img.save(self.save_path,  quality_mode='rates', quality_layers=rate)
+        img_jp2 = Image.open(self.save_path)
 
-        img_noisy = img + np.random.randn(img.shape[0], img.shape[1], img.shape[2]) * noise_factor
-        img_noisy = np.clip(img_noisy, 0., 1.)
+        return img_jp2
 
-        return img_noisy
 
 
 class ReduceResolution:

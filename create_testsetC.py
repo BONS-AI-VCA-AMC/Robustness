@@ -37,7 +37,7 @@ def create_testset_c(path_images, path_masks=None, levels=5):
     df["original file"] = images_clean
 
     """perturbations"""
-    corruption_options = ['Resolution', 'JPG', 'SpotLight - light', 'Contrast', 'Brightness'
+    corruption_options = ['Resolution', 'JPG', 'JPEG2000', 'Overexposure', 'Contrast', 'Brightness'
                            ,'Saturation', 'Hue', 'defocus-blur', 'Motion-blur']
 
     factor_1 = list(range(1,levels+1))
