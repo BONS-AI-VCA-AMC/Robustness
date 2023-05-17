@@ -49,6 +49,20 @@ class JPGcompression:
         else:
             im.save(filename, format="JPEG", quality=1)
 
+    def __call__(self, img, mask, has_mask):
+        compression_ratio = [4,12,20,28,34,40,46,50,54,58][self.severity - 1]
+        self.shape = img.size
+        if self.shape[0] != 1024:
+            img = img.resize((1024, 1024), resample=Image.LANCZOS)
+            self.shape = img.size
+
+        quality = self.JPEGSaveWithTargetSize(img, self.save_path_jpg, compression_ratio)
+
+        # Apply JPEG compression
+        img_jpg = Image.open(self.save_path_jpg)
+
+        return img_jpg, mask, has_mask
+
 
 class JPG2000compression:
     def __init__(self, save_path, severity=0):
@@ -109,6 +123,12 @@ class ColorJitter:
             c = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 1.2, 1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, 3.6, 4.0][
                 self.severity - 1]
             self.jitter = transforms.ColorJitter(brightness=(c, c))
+
+        if deg == 'underexposure':
+            c = [0.9, 0.85, 0.8, 0.75, 0.70, 0.6, 0.5, 0.4, 0.3, 0.2][
+                self.severity - 1]
+            self.jitter = transforms.ColorJitter(brightness=(c, c))
+
         if deg == 'contrast':
             c = \
             [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 0.95, 1.1, 1.2, 1.25, 1.3, 1.4, 1.7, 2.0, 2.3, 2.7,

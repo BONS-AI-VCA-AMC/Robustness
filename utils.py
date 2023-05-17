@@ -65,5 +65,7 @@ def define_corruption(corruption, factor):
         corruptions.append(glob_cor.motion_blur(factor))
     if corruption == 'Sharpness':
         corruptions.append(glob_cor.Sharpness(factor))
+    if corruption == 'Underexposure':
+        corruptions.append(glob_cor.ColorJitter(factor, deg='underexposure'))
 
     return corruptions

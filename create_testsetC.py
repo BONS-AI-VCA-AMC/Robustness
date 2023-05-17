@@ -9,13 +9,13 @@ import sys
 random.seed(0)
 
 
-def create_testset_c(path_images, path_masks=None, levels=5):
+def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb_iterations=5, include_compression=False):
     """read images and check imagesize"""
     cwd = os.getcwd()
     images = os.listdir(path_images)
 
     """
-    we create an excel file to link all corrupted images to the orginal ones to link them later with the correct label
+    we create an excel file to link all corrupted images to the original ones to link them later with the correct label
     """
     df = pd.DataFrame()
 
@@ -34,20 +34,27 @@ def create_testset_c(path_images, path_masks=None, levels=5):
     images_clean = [i for j, i in enumerate(images) if j not in idx_remove]
     print('total number of images used for TestSet-C = ' + str(len(path_images_clean)))
 
-    df["original file"] = images_clean
+    images_clean_total = []
+    images_corruption_total = []
 
     """perturbations"""
-    corruption_options = ['Resolution', 'JPG', 'JPEG2000', 'Overexposure', 'Contrast', 'Brightness'
-                           ,'Saturation', 'Hue', 'defocus-blur', 'Motion-blur']
+    corruption_options = ['Motion-blur', 'Overexposure', 'defocus-blur', 'Hue','Saturation', 'Contrast', 'Sharpness', 'Brightness','Resolution', 'JPG', 'JPEG2000']
 
-    factor_1 = list(range(1,levels+1))
-    factor_2 = list(range(11-levels, 11))+list(range(11,11+levels))
+    #if include_compression == True:
+    #    print('test compression')
+    #    corruptions_compression = ['Resolution', 'JPG', 'JPEG2000']
+    #    corruption_options.extend(corruptions_compression)
+
+    factor_1 = list(range(1+min_level, max_levels+1))
+    factor_2 = list(range(11-max_levels, 11-min_level))+list(range(11+min_level,11+max_levels))
 
     # save dir
     path_save_images = os.path.join(cwd, 'Testset-C/Images')
     os.makedirs(path_save_images, exist_ok=True)
 
-    if path_masks is not None:
+
+
+    if os.path.exists(path_masks) is True:
         path_save_masks = os.path.join(cwd, 'Testset-C/Masks')
         os.makedirs(path_save_masks, exist_ok=True)
 
@@ -59,7 +66,7 @@ def create_testset_c(path_images, path_masks=None, levels=5):
             AttributeError('not the same amount of images and masks')
 
     # apply corruptions
-    nb_it = 5  # number of iteration over testset
+    nb_it = nb_iterations  # number of iteration over testset
     nb_per = 5  # maximum number of corruptions per images
 
     for i in list(range(nb_it)):
@@ -83,7 +90,7 @@ def create_testset_c(path_images, path_masks=None, levels=5):
                 corruption = corruption_options[idx_corruptions[nb]]
                 corruptions_names.append(corruption)
 
-                if corruption in ['Contrast', 'Brightness','Saturation', 'Hue']:
+                if corruption in ['Contrast', 'Saturation', 'Hue', 'Brightness']: #Brightness
                     factor = factor_2[random.randint(0,len(factor_2)-1)]
                 else:
                     factor = factor_1[random.randint(0, len(factor_1)-1)]
@@ -104,18 +111,21 @@ def create_testset_c(path_images, path_masks=None, levels=5):
             path_image = os.path.join(path_save_images, name)
             image_c.save(path_image)
 
-            if path_masks is not None:
+            if os.path.exists(path_masks) is True:
                 mask = Image.open(path_masks_clean[k])
                 mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
 
-        df["iteration " + str(i)] = names
+        images_clean_total.extend(images_clean)
+        images_corruption_total.extend(names)
 
         print('iteration ' + str(i+1) + ' is done')
         print(str(nb_it-(i+1)) + ' iterations to go')
         print('-----------------------------------')
 
+    df["original file"] = images_clean_total
+    df["corrupted file"] = images_corruption_total
     df.to_excel(os.path.join(cwd, 'conversion_file.xlsx'))
     print('Testset-C is created!')
     print('In case of classification the conversion file can be used to link the correct label to the corrupted images')
@@ -125,6 +135,19 @@ def create_testset_c(path_images, path_masks=None, levels=5):
 if __name__ == "__main__":
 
     path_images = sys.argv[1]
+
+    # Parse keyword arguments
+    kwargs = {}
+    for arg in sys.argv[2:]:
+        key, value = arg.split('=')
+        kwargs[key] = value
+
+    path_masks = kwargs.get('path_masks')
+    max_levels = int(kwargs.get('max_levels'))
+    min_level = int(kwargs.get('min_level'))
+    inc_compression = bool(kwargs.get('include_compression'))
+    iterations = int(kwargs.get('nb_iterations'))
+    '''
     # Check if there are at least two inputs
     if len(sys.argv) >= 3:
         # If there are, set input2 to the second input
@@ -132,5 +155,20 @@ if __name__ == "__main__":
     else:
         path_masks = None
 
-    create_testset_c(path_images, path_masks=path_masks, levels=5)
+    if len(sys.argv) >= 3:
+        # If there are, set input2 to the second input
+        max_levels = sys.argv[3]
+    if len(sys.argv) >= 4:
+        min_level = sys.argv[4]
+    if len(sys.argv) >=5:
+        iterations = sys.argv[5]
+    if len(sys.argv) >=6:
+        inc_compression = sys.argv[6]
+    '''
+    print(path_masks)
+    print(max_levels, min_level)
+    print(inc_compression)
+    print(iterations)
+
+    create_testset_c(path_images, path_masks=path_masks, max_levels=int(max_levels), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
 
