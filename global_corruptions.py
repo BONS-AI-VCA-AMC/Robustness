@@ -49,7 +49,7 @@ class JPGcompression:
             im.save(filename, format="JPEG", quality=1)
 
     def __call__(self, img, mask, has_mask):
-        compression_ratio = [4,12,20,28,34,40,46,50,54,58][self.severity - 1]
+        compression_ratio = [4,12,20,28,34,40,46,50,54,58][self.severity]
         self.shape = img.size
         if self.shape[0] != 1024:
             img = img.resize((1024, 1024), resample=Image.LANCZOS)
@@ -70,7 +70,7 @@ class JPG2000compression:
 
     def __call__(self, img):
 
-        c = [[4],[12],[20],[28],[34],[40],[46],[50],[54],[58]][self.severity - 1]
+        c = [[4],[12],[20],[28],[34],[40],[46],[50],[54],[58]][self.severity]
         rate = c
 
         img.save(self.save_path,  quality_mode='rates', quality_layers=rate)
@@ -90,7 +90,7 @@ class ReduceResolution:
         return img_out
 
     def __call__(self, img):
-        c = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20][self.severity - 1]
+        c = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20][self.severity]
 
         factor = c
 
@@ -120,28 +120,28 @@ class ColorJitter:
 
         if deg == 'brightness':
             c = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 1.2, 1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, 3.6, 4.0][
-                self.severity - 1]
+                self.severity]
             self.jitter = transforms.ColorJitter(brightness=(c, c))
 
         if deg == 'underexposure':
             c = [0.9, 0.85, 0.8, 0.75, 0.70, 0.6, 0.5, 0.4, 0.3, 0.2][
-                self.severity - 1]
+                self.severity]
             self.jitter = transforms.ColorJitter(brightness=(c, c))
 
         if deg == 'contrast':
             c = \
             [0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 0.95, 1.1, 1.2, 1.25, 1.3, 1.4, 1.7, 2.0, 2.3, 2.7,
-             3.1][self.severity - 1]
+             3.1][self.severity]
             self.jitter = transforms.ColorJitter(contrast=(c, c))
         if deg == 'saturation':
             c = \
             [0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.7, 2.0, 2.6, 3.5][
-                self.severity - 1]
+                self.severity]
             self.jitter = transforms.ColorJitter(saturation=(c, c))
         if deg == 'hue':
             c = \
             [-0.1, -0.08, -0.065, -0.04, -0.03, -0.025, -0.02, -0.016, -0.013, -0.01, 0.01, 0.013, 0.016, 0.018, 0.02,
-             0.04, 0.05, 0.06, 0.08, 0.1][self.severity - 1]
+             0.04, 0.05, 0.06, 0.08, 0.1][self.severity]
             self.jitter = transforms.ColorJitter(hue=(c, c))
 
     def __call__(self, img):
@@ -159,7 +159,7 @@ class Sharpness(object):
         self.severity = severity
 
     def __call__(self, img):
-        c = [2.0, 4.0, 5.0, 10, 15, 20, 40, 60, 80, 100][self.severity - 1]
+        c = [2.0, 4.0, 5.0, 10, 15, 20, 40, 60, 80, 100][self.severity]
 
         sharpness = transforms.RandomAdjustSharpness(c, p=1)
 
@@ -185,7 +185,7 @@ class motion_blur(object):
 
     def __call__(self, img):
         c = [(10, 3), (24, 8), (40, 16), (70, 16), (100, 16), (100, 24), (120, 24), (120, 30), (150, 30), (200, 40)][
-            self.severity - 1]
+            self.severity]
 
         output = BytesIO()
 

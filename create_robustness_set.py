@@ -29,8 +29,11 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
         corruptions_compression = ['Resolution', 'JPG', 'JPEG2000']
         corruption_options.extend(corruptions_compression)
 
-    factor_1 = list(range(1+min_level, max_levels+1))
-    factor_2 = list(range(11-max_levels, 11-min_level))+list(range(11+min_level,11+max_levels))
+    print(corruption_options)
+    factor_1 = list(range(min_level-1, max_levels))
+    factor_2 = list(range(10-(max_levels), 10-min_level+1))+list(range(10+min_level-1, 10+max_levels))
+    print(factor_1)
+    print(factor_2)
 
     # save dir
     path_save_images = os.path.join(cwd, 'Robustness test set/Images')
@@ -52,7 +55,6 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
 
     # apply corruptions
     nb_it = nb_iterations  # number of iteration over testset
-    nb_corruptions = 5  # maximum number of corruptions per images
 
     for i in list(range(nb_it)):
         names = []
@@ -64,16 +66,21 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
             image = image.resize((1024, 1024), resample=Image.LANCZOS)
 
             p = random.random()
-
-            if p < 3/11:
+            nb_corruptions = 5 # maximum number of corruptions per images
+            if p < 3 / 11:
                 nb_corruptions = nb_corruptions - 1
 
 
             nb_corruptions = random.randint(1, nb_corruptions)  #random number of corruptions for image
-            idx_corruptions = random.sample(range(0, len(corruption_options - 3)), nb_corruptions)  #random chosen corruption
+
+
+
 
             if include_compression is True and p < 3/11:
-                idx_corruptions.extend(random.randint(range(len(corruption_options - 3)), len(corruption_options - 3)))
+                idx_corruptions = random.sample(range(0, len(corruption_options) - 3),nb_corruptions)  # random chosen corruption
+                idx_corruptions.append(random.randint(len(corruption_options)-3, len(corruption_options)))
+            else:
+                idx_corruptions = random.sample(range(0, len(corruption_options)), nb_corruptions)
 
             corruptions = list()
             corruptions_names = list()
@@ -98,11 +105,15 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
             image_c = transforms(image)
 
             name = 'image_' + str(random.randint(0,10000)) + '_'
+            name_clean = os.path.split(path_images[k])[1]
+
             for j in range(len(corruptions_names)):
                 name = name + corruptions_names[j] + '_' + str(factors[j]) + '_'
 
             name = name + '.png'
             names.append(name)
+            images_clean.append(name_clean)
+
             path_image = os.path.join(path_save_images, name)
             image_c.save(path_image)
 
@@ -111,6 +122,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
                 mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
+
 
         images_clean_total.extend(images_clean)
         images_corruption_total.extend(names)
@@ -138,7 +150,7 @@ if __name__ == "__main__":
         kwargs[key] = value
 
     path_masks = kwargs.get('path_masks')
-    max_levels = int(kwargs.get('max_levels'))
+    max_levels = int(kwargs.get('max_level'))
     min_level = int(kwargs.get('min_level'))
     inc_compression = bool(kwargs.get('include_compression'))
     iterations = int(kwargs.get('nb_iterations'))
@@ -148,5 +160,5 @@ if __name__ == "__main__":
     print(inc_compression)
     print(iterations)
 
-    create_testset_c(path_images, path_masks=path_masks, max_levels=int(max_levels), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
+    create_testset_c(path_images, path_masks=path_masks, max_level=int(max_levels), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
 
