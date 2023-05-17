@@ -20,30 +20,14 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
     df = pd.DataFrame()
 
     print('total number of images in folder = ' + str(len(images)))
-    combined_path_images = combine_paths(path_images, images)
-    idx_remove = []
-
-    for i in range(len(combined_path_images)):
-        image = Image.open(combined_path_images[i])
-        shape = image.size
-    #    if shape[0] < 1024 or shape[1] < 1024:
-    #        idx_remove.append(i)
-
-    print('total number of images removed because of low resolution = ' + str(len(idx_remove)))
-    path_images_clean = [i for j, i in enumerate(combined_path_images) if j not in idx_remove]
-    images_clean = [i for j, i in enumerate(images) if j not in idx_remove]
-    print('total number of images used for TestSet-C = ' + str(len(path_images_clean)))
-
-    images_clean_total = []
-    images_corruption_total = []
+    path_images = combine_paths(path_images, images)
 
     """perturbations"""
-    corruption_options = ['Motion-blur', 'Overexposure', 'defocus-blur', 'Hue','Saturation', 'Contrast', 'Sharpness', 'Brightness','Resolution', 'JPG', 'JPEG2000']
+    corruption_options = ['Motion-blur', 'Overexposure', 'defocus-blur', 'Hue','Saturation', 'Contrast', 'Sharpness', 'Brightness']
 
-    #if include_compression == True:
-    #    print('test compression')
-    #    corruptions_compression = ['Resolution', 'JPG', 'JPEG2000']
-    #    corruption_options.extend(corruptions_compression)
+    if include_compression == True:
+        corruptions_compression = ['Resolution', 'JPG', 'JPEG2000']
+        corruption_options.extend(corruptions_compression)
 
     factor_1 = list(range(1+min_level, max_levels+1))
     factor_2 = list(range(11-max_levels, 11-min_level))+list(range(11+min_level,11+max_levels))
@@ -52,33 +36,44 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
     path_save_images = os.path.join(cwd, 'Testset-C/Images')
     os.makedirs(path_save_images, exist_ok=True)
 
-
+    #store image names and corrupted image names
+    images_clean_total = []
+    images_corruption_total = []
 
     if os.path.exists(path_masks) is True:
         path_save_masks = os.path.join(cwd, 'Testset-C/Masks')
         os.makedirs(path_save_masks, exist_ok=True)
 
         masks = os.listdir(path_masks)
-        combined_path_masks = combine_paths(path_masks, masks)
-        path_masks_clean = [i for j, i in enumerate(combined_path_masks) if j not in idx_remove]
+        path_masks = combine_paths(path_masks, masks)
 
-        if len(path_masks_clean) != len(path_images_clean):
+        if len(path_masks) != len(path_images):
             AttributeError('not the same amount of images and masks')
 
     # apply corruptions
     nb_it = nb_iterations  # number of iteration over testset
-    nb_per = 5  # maximum number of corruptions per images
+    nb_corruptions = 5  # maximum number of corruptions per images
 
     for i in list(range(nb_it)):
         names = []
-        for k in range(len(path_images_clean)):
+        images_clean = []
+        for k in range(len(path_images)):
             '''resize images to 1024x1024'''
 
-            image = Image.open(path_images_clean[k]).convert('RGB')
+            image = Image.open(path_images[k]).convert('RGB')
             image = image.resize((1024, 1024), resample=Image.LANCZOS)
 
-            nb_corruptions = random.randint(1,nb_per)  # random number of corruptions for image
-            idx_corruptions = random.sample(range(0, len(corruption_options)), nb_corruptions)  # random chosen corruption
+            p = random.random()
+
+            if p < 3/11:
+                nb_corruptions = nb_corruptions - 1
+
+
+            nb_corruptions = random.randint(1, nb_corruptions)  #random number of corruptions for image
+            idx_corruptions = random.sample(range(0, len(corruption_options - 3)), nb_corruptions)  #random chosen corruption
+
+            if include_compression is True and p < 3/11:
+                idx_corruptions.extend(random.randint(range(len(corruption_options - 3)), len(corruption_options - 3)))
 
             corruptions = list()
             corruptions_names = list()
@@ -91,7 +86,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
                 corruptions_names.append(corruption)
 
                 if corruption in ['Contrast', 'Saturation', 'Hue', 'Brightness']: #Brightness
-                    factor = factor_2[random.randint(0,len(factor_2)-1)]
+                    factor = factor_2[random.randint(0, len(factor_2)-1)]
                 else:
                     factor = factor_1[random.randint(0, len(factor_1)-1)]
 
@@ -112,7 +107,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
             image_c.save(path_image)
 
             if os.path.exists(path_masks) is True:
-                mask = Image.open(path_masks_clean[k])
+                mask = Image.open(path_masks[k])
                 mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
@@ -147,24 +142,7 @@ if __name__ == "__main__":
     min_level = int(kwargs.get('min_level'))
     inc_compression = bool(kwargs.get('include_compression'))
     iterations = int(kwargs.get('nb_iterations'))
-    '''
-    # Check if there are at least two inputs
-    if len(sys.argv) >= 3:
-        # If there are, set input2 to the second input
-        path_masks = sys.argv[2]
-    else:
-        path_masks = None
 
-    if len(sys.argv) >= 3:
-        # If there are, set input2 to the second input
-        max_levels = sys.argv[3]
-    if len(sys.argv) >= 4:
-        min_level = sys.argv[4]
-    if len(sys.argv) >=5:
-        iterations = sys.argv[5]
-    if len(sys.argv) >=6:
-        inc_compression = sys.argv[6]
-    '''
     print(path_masks)
     print(max_levels, min_level)
     print(inc_compression)
