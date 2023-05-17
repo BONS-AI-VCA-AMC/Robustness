@@ -20,8 +20,6 @@ class Resize:
     def __call__(self, img):
         img = transforms.functional.resize(img, size=self.target_size,
                                            interpolation=transforms.InterpolationMode.LANCZOS)
-        mask = transforms.functional.resize(mask, size=self.target_size,
-                                            interpolation=transforms.InterpolationMode.NEAREST)
 
         return img
 

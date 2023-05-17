@@ -11,6 +11,10 @@ performance already decreases, within clinically relevant regions, up to 35%, 8%
 and compression, respectively. Our findings emphasize the significance of including robustness evaluation for DNNs used in endoscopy.
 
 # Results
+The figures below show the effect of individual image degradations at different severity levels. All corruptions are included to create the R5-test set (all corruptions with severity level upt to 5).
+\
+\
+
 ![FIG 1.](Images/user_dependent.png)
 **Fig 1.** *Effects of user-dependent image degradation on model performance. The blue
 areas indicate the levels of severity expected to be present in expert datasets, while the
@@ -37,9 +41,19 @@ pip install -r requirements.txt
 This will install all of the necessary packages listed in the requirements.txt file. Please also make sure you install the ImageMagicWand library:
 https://imagemagick.org/script/download.php
 
-## Usage
-To generate the TestSet-C dataset, use the following command:
+## Create Robustness test set
+The robustness test set is meant to evalate endoscopic models on more hetrogeneus data by applying the above mentioned corruptions. In the orignal paper we only include corruptions
+upto severity level 5 since they are clincally calibrated and at level 5 still realistic.
+To generate the Robustness test set, use the following command:
+
 ```
 python create_testset_c.py 'path/to/testset/images' 'path/to/testset/masks'
 ```
 include the paths to masks if there are present.
+
+![FIG 5.](Images/R5T.png)
+**Fig 4.** *Random examples included in the robustness test set.*
+
+
+
+
