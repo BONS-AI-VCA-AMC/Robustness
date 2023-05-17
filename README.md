@@ -1,5 +1,5 @@
 # Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy
-ACCPEPTED AT MICCAI 2023! \
+ACCEPTED AT MICCAI 2023! \
 \
 This repository contains code used to create the robustness test set in the paper 'Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy'. The full paper can found in this [link]("aanpassen").
 # Abstract
