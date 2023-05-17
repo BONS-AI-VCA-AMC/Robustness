@@ -14,7 +14,6 @@ and compression, respectively. Our findings emphasize the significance of includ
 The figures below show the effect of individual image degradations at different severity levels. All corruptions are included to create the R5-test set (all corruptions with severity level upt to 5).
 \
 \
-
 ![FIG 1.](Images/user_dependent.png)
 **Fig 1.** *Effects of user-dependent image degradation on model performance. The blue
 areas indicate the levels of severity expected to be present in expert datasets, while the
