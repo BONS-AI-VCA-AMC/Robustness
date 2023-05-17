@@ -53,7 +53,7 @@ To generate the Robustness test set, use the following command:
 ```
 python create_testset_c.py 'path/to/testset/images' 'path/to/testset/masks'
 ```
-include the paths to masks if there are present.
+include the paths to masks if there are present. The robustness after waiting for a while corrupted images can be found in the 'robustness test set' folder.
 
 ![FIG 5.](Images/R5T.png)
 **Fig 4.** *Random examples included in the robustness test set.*

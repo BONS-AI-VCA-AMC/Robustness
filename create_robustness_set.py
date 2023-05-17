@@ -33,7 +33,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
     factor_2 = list(range(11-max_levels, 11-min_level))+list(range(11+min_level,11+max_levels))
 
     # save dir
-    path_save_images = os.path.join(cwd, 'Testset-C/Images')
+    path_save_images = os.path.join(cwd, 'Robustness test set/Images')
     os.makedirs(path_save_images, exist_ok=True)
 
     #store image names and corrupted image names
@@ -41,7 +41,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
     images_corruption_total = []
 
     if os.path.exists(path_masks) is True:
-        path_save_masks = os.path.join(cwd, 'Testset-C/Masks')
+        path_save_masks = os.path.join(cwd, 'Robustness test set/Masks')
         os.makedirs(path_save_masks, exist_ok=True)
 
         masks = os.listdir(path_masks)
@@ -122,7 +122,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
     df["original file"] = images_clean_total
     df["corrupted file"] = images_corruption_total
     df.to_excel(os.path.join(cwd, 'conversion_file.xlsx'))
-    print('Testset-C is created!')
+    print('Robustness test set is created!')
     print('In case of classification the conversion file can be used to link the correct label to the corrupted images')
     print('In case of segmentation the ground truth masks got the same name as the corrupted images')
 
