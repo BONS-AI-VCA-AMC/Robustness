@@ -43,7 +43,8 @@ https://imagemagick.org/script/download.php
 
 ## Create Robustness test set
 The robustness test set is meant to evalate endoscopic models on more hetrogeneus data by applying the above mentioned corruptions. In the orignal paper we only include corruptions
-upto severity level 5 since they are clincally calibrated and at level 5 still realistic.
+upto severity level 5 since they are clincally calibrated and at level 5 still realistic. In the paper model performance dropped up to 14% on the robustness test set. \
+\
 To generate the Robustness test set, use the following command:
 
 ```
