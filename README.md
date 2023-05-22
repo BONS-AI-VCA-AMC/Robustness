@@ -51,7 +51,7 @@ expected in 'expert level' datasets. Alternatively, for those seeking to assess 
 To generate the Robustness test set, use the following command:
 
 ```
-python create_testset_c.py 'path/to/testset/images' path_masks='path/to/testset/Masks'  max_level=5, min_level=1 nb_iterations=5 include_compression=True
+python create_robustness_set.py 'path/to/testset/images' path_masks='path/to/testset/Masks'  max_level=5, min_level=1 nb_iterations=5 include_compression=True
 ```
 include the paths to masks if there are present. *nb_iterations* denotes the number of iterations the original test set is looped over.
 In the original paper, the test set was corrupted a total of 5 times. The robustness after waiting for a while corrupted images can be found in the 'robustness test set' folder.
