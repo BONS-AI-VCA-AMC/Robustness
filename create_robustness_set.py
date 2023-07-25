@@ -9,7 +9,7 @@ import sys
 random.seed(0)
 
 
-def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb_iterations=5, include_compression=False):
+def create_robustness_set(path_images, path_masks=None, max_level=5, min_level=1, nb_iterations=5, include_compression=False):
     """read images and check imagesize"""
     cwd = os.getcwd()
     images = os.listdir(path_images)
@@ -30,8 +30,8 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
         corruption_options.extend(corruptions_compression)
 
     print(corruption_options)
-    factor_1 = list(range(min_level-1, max_levels))
-    factor_2 = list(range(10-(max_levels), 10-min_level+1))+list(range(10+min_level-1, 10+max_levels))
+    factor_1 = list(range(min_level-1, max_level))
+    factor_2 = list(range(10-(max_level), 10-min_level+1))+list(range(10+min_level-1, 10+max_level))
     print(factor_1)
     print(factor_2)
 
@@ -48,9 +48,9 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
         os.makedirs(path_save_masks, exist_ok=True)
 
         masks = os.listdir(path_masks)
-        path_masks = combine_paths(path_masks, masks)
+        path_masks_combined = combine_paths(path_masks, masks)
 
-        if len(path_masks) != len(path_images):
+        if len(path_masks_combined) != len(path_images):
             AttributeError('not the same amount of images and masks')
 
     # apply corruptions
@@ -118,7 +118,7 @@ def create_testset_c(path_images, path_masks=None, max_levels=5, min_level=1, nb
             image_c.save(path_image)
 
             if os.path.exists(path_masks) is True:
-                mask = Image.open(path_masks[k])
+                mask = Image.open(path_masks_combined[k])
                 mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
@@ -150,15 +150,15 @@ if __name__ == "__main__":
         kwargs[key] = value
 
     path_masks = kwargs.get('path_masks')
-    max_levels = int(kwargs.get('max_level'))
+    max_level = int(kwargs.get('max_level'))
     min_level = int(kwargs.get('min_level'))
     inc_compression = bool(kwargs.get('include_compression'))
     iterations = int(kwargs.get('nb_iterations'))
 
     print(path_masks)
-    print(max_levels, min_level)
+    print(max_level, min_level)
     print(inc_compression)
     print(iterations)
 
-    create_testset_c(path_images, path_masks=path_masks, max_level=int(max_levels), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
+    create_robustness_set(path_images, path_masks=path_masks, max_level=int(max_level), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
 

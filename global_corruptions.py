@@ -170,7 +170,7 @@ class Sharpness(object):
 
 # classes for motion blurring
 # Extend wand.image.Image class to include method signature
-# The code to synthesize motion blur is taken from https://github.com/hendrycks/robustness/tree/master
+# The code to synthesize motion blur is adapted from https://github.com/hendrycks/robustness/tree/master
 class MotionImage(WandImage):
     def motion_blur(self, radius=0.0, sigma=0.0, angle=0.0):
         wandlibrary.MagickMotionBlurImage(self.wand, radius, sigma, angle)

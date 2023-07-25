@@ -1,30 +1,32 @@
 # Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy
-ACCEPTED AT MICCAI 2023! \
 \
-This repository contains code used to create the robustness test set in the paper 'Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy'. The full paper can found in this [link]("aanpassen").
+This repository contains code used to create the robustness test set in the paper 'Robustness evaluation of deep neural networks for endoscopic image analysis: insights
+and strategies.'.
+
 # Abstract
-Virtually all endoscopic AI models are developed with clean, high-quality imagery from expert centers, but the clinical data quality is much more heterogeneous. Endoscopic image quality can degrade by e.g. poor lighting, motion blur, and image compression, which have a significant impact on the performance of DNNs. In order to find the limitations of DNNs and provide more robust models for automated cancer
-detection, this work evaluates model performance under clinically relevant image degradations. Commonly-used DNN architectures are eval-
-uated for various types of degradation, grouped in 3 categories: userdependent corruptions, image acquisition and processing changes, and
-artifacts from compression. All corruption levels of severity were calibrated by two clinical research fellows. The results indicate that model
-performance already decreases, within clinically relevant regions, up to 35%, 8%, and 40% for user-dependent, image acquisition and processing,
-and compression, respectively. Our findings emphasize the significance of including robustness evaluation for DNNs used in endoscopy.
-
-# Results
-
-The following figures illustrate the impact of individual image degradations across varying severity levels.\
-\
-![FIG 1.](Images/user_dependent.png)
-**Fig 1.** *Effects of user-dependent image degradation on model performance. The blue
-areas indicate the levels of severity expected to be present in expert datasets, while the
-green area indicates a clinically relevant amount of degradation. The black dotted line
-highlights the reference performance of the ResNet-50 encoder on the original test set.*
-
-![FIG 2.](Images/processing.png)
-**Fig 2.** *Effects of changes in image acquisition and processing on model performance.*
-
-![FIG 3.](Images/compression.png)
-**Fig 3.** *Effects of changes in image acquisition and processing on model performance.*
+Computer-aided detection and diagnosis systems (CADe/CADx) in endoscopy are commonly trained using high-quality imagery, which is not representative for the heterogeneous input typically encountered in clinical practice. In endoscopy,
+the image quality heavily relies on both the skills and experience of the endoscopist and the specifications of the system used for screening. Factors such as poor illumination, motion blur, and specific post-processing settings can
+significantly alter the quality and general appearance of these images. This so-called domain gap between the data used for de-
+veloping the system and the data it encounters after deployment, and the impact it has on the performance of deep neural networks (DNNs) 
+supportive endoscopic CAD systems remains largely unexplored. As many of such systems, for e.g. polyp detection,
+are already being rolled out in clinical practice, this poses severe patient risks in particularly community hospitals,
+where both the imaging equipment and experience are
+subject to considerable variation. Therefore, this study aims to evaluate the impact of
+this domain gap on the clinical performance of CADe/CADx for various endoscopic
+applications. For this, we leverage two publicly available data sets (KVASIR-SEG and
+GIANA) and two in-house data sets. We investigate the performance of commonly-used
+DNN architectures under synthetic, clinically calibrated image degradations and on a
+prospectively collected dataset including 342 endoscopic images of lower subjective
+quality. Additionally, we assess the influence of DNN architecture and complexity, data
+augmentation, and pretraining techniques for improved robustness. The results reveal
+a considerable decline in performance of 11.6% (±1.5) as compared to the reference,
+within the clinically calibrated boundaries of image degradations. Nevertheless, employing more advanced DNN architectures and self-supervised in-domain pre-training
+effectively mitigate this drop to 7.7% (±2.03). Additionally, these enhancements yield
+the highest performance on the manually collected test set including images with lower
+subjective quality. By comprehensively assessing the robustness of popular DNN architectures and training strategies across multiple datasets, this study provides valuable in-
+sights into their performance and limitations for endoscopic applications. The findings
+highlight the importance of including robustness evaluation when developing DNNs for
+endoscopy applications and propose strategies to mitigate performance loss.
 
 ## Installation
 To clone the repository, use the following command:
