@@ -1,7 +1,8 @@
 # Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy
 \
-This repository contains code used to create the robustness test set in the paper 'Robustness evaluation of deep neural networks for endoscopic image analysis: insights
-and strategies.'.
+This repository contains code used to create the robustness test set used in the following publication:
+- Tim J.M. Jaspers *et al.* - Robustness evaluation of deep neural networks for endoscopic image analysis: insights
+and strategies *(Currently under Review)* 
 
 # Abstract
 Computer-aided detection and diagnosis systems (CADe/CADx) in endoscopy are commonly trained using high-quality imagery, which is not representative for the heterogeneous input typically encountered in clinical practice. In endoscopy,
