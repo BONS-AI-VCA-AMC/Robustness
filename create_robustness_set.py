@@ -29,11 +29,8 @@ def create_robustness_set(path_images, path_masks=None, max_level=5, min_level=1
         corruptions_compression = ['Resolution', 'JPG', 'JPEG2000']
         corruption_options.extend(corruptions_compression)
 
-    print(corruption_options)
     factor_1 = list(range(min_level-1, max_level))
     factor_2 = list(range(10-(max_level), 10-min_level+1))+list(range(10+min_level-1, 10+max_level))
-    print(factor_1)
-    print(factor_2)
 
     # save dir
     path_save_images = os.path.join(cwd, 'Robustness test set/Images')
@@ -154,11 +151,6 @@ if __name__ == "__main__":
     min_level = int(kwargs.get('min_level'))
     inc_compression = bool(kwargs.get('include_compression'))
     iterations = int(kwargs.get('nb_iterations'))
-
-    print(path_masks)
-    print(max_level, min_level)
-    print(inc_compression)
-    print(iterations)
 
     create_robustness_set(path_images, path_masks=path_masks, max_level=int(max_level), min_level=int(min_level), nb_iterations=int(iterations), include_compression=bool(inc_compression))
 
