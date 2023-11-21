@@ -2,7 +2,7 @@
 \
 This repository contains code used to create the robustness test set used in the following publication:
 
-- Tim J.M. Jaspers *et al.* - Investigating the Impact of Image Quality on Endoscopic AI Model Performance (*Second Workshop on Applications of Medical AI (AMAI) - Satellite Event MICCAI 2023*)
+- [Tim J.M. Jaspers *et al.*](https://link.springer.com/chapter/10.1007/978-3-031-47076-9_4) - Investigating the Impact of Image Quality on Endoscopic AI Model Performance (*Second Workshop on Applications of Medical AI (AMAI) - Satellite Event MICCAI 2023*)
 
 - Tim J.M. Jaspers *et al.* - Robustness evaluation of deep neural networks for endoscopic image analysis: insights
 and strategies *(Currently under Review)* 
