@@ -51,7 +51,7 @@ The purpose of the robustness test set is created to evaluate endoscopic models 
 incorporating the aforementioned corruptions. In the original paper, we included corruptions
 up to severity level 5, as they are clinically calibrated and still realistic at that level. The paper revealed a performance drop of up to **14%** on the robustness test set.\
 \
-An other uption could be to only evaluated upto severity level 2, wich represent the amount of image degradation
+An other option could be to only evaluated upto severity level 2, which represent the amount of image degradation
 expected in 'expert level' datasets. Alternatively, for those seeking to assess robustness in extreme scenarios, the evaluation could extend to severity levels 8, 9, and 10.\
 \
 To generate the Robustness test set, use the following command:
@@ -69,7 +69,7 @@ In the original paper, the test set was corrupted a total of 5 times. The robust
 ## Citation
 If you find our work useful in your research please consider citing our paper:
 ```
-@InProceedings{IQimpact2023,
+@InProceedings{IQimpact2024,
 author="Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons"
 title="Investigating the Impact of Image Quality on Endoscopic AI Model Performance",
 booktitle="Applications of Medical Artificial Intelligence",
@@ -79,6 +79,9 @@ pages="32--41",
 isbn="978-3-031-47076-9"
 }
 ```
+
+## Acknowledgments 
+
 
 
 
