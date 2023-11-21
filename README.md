@@ -1,6 +1,9 @@
 # Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy
 \
 This repository contains code used to create the robustness test set used in the following publication:
+
+- Tim J.M. Jaspers *et al.* - Investigating the Impact of Image Quality on Endoscopic AI Model Performance (*Second Workshop on Applications of Medical AI (AMAI) - Satellite Event MICCAI 2023*)
+
 - Tim J.M. Jaspers *et al.* - Robustness evaluation of deep neural networks for endoscopic image analysis: insights
 and strategies *(Currently under Review)* 
 
@@ -61,6 +64,22 @@ In the original paper, the test set was corrupted a total of 5 times. The robust
 
 ![FIG 5.](Images/R5T.png)
 **Fig 4.** *Random examples included in the robustness test set.*
+
+
+## Citation
+If you find our work useful in your research please consider citing our paper:
+```
+@InProceedings{IQimpact2023,
+author="Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons"
+title="Investigating the Impact of Image Quality on Endoscopic AI Model Performance",
+booktitle="Applications of Medical Artificial Intelligence",
+year="2024",
+publisher="Springer Nature Switzerland",
+pages="32--41",
+isbn="978-3-031-47076-9"
+}
+```
+
 
 
 
