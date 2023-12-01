@@ -60,7 +60,7 @@ To generate the Robustness test set, use the following command:
 python create_robustness_set.py 'path/to/testset/images' path_masks='path/to/testset/Masks'  max_level=5, min_level=1 nb_iterations=5 include_compression=True
 ```
 include the paths to masks if there are present. *nb_iterations* denotes the number of iterations the original test set is looped over.
-In the original paper, the test set was corrupted a total of 5 times. The robustness after waiting for a while corrupted images can be found in the 'robustness test set' folder.
+In the original paper, the test set was corrupted a total of 5 times. After waiting for a while the corrupted images can be found in the 'robustness test set' folder.
 
 ![FIG 5.](Images/R5T.png)
 **Fig 4.** *Random examples included in the robustness test set.*
@@ -70,7 +70,7 @@ In the original paper, the test set was corrupted a total of 5 times. The robust
 If you find our work useful in your research please consider citing our paper:
 ```
 @InProceedings{IQimpact2024,
-author="Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons"
+author="Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons",
 title="Investigating the Impact of Image Quality on Endoscopic AI Model Performance",
 booktitle="Applications of Medical Artificial Intelligence",
 year="2024",
