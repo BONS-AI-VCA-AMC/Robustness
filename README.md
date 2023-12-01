@@ -85,7 +85,6 @@ numpages = {10},
 keywords = {Image degradation, Robustness, DNN, Endoscopy},
 location = {Vancouver, BC, Canada}
 }
-
 ```
 
 ## Acknowledgments 
