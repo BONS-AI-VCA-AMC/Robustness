@@ -87,7 +87,6 @@ location = {Vancouver, BC, Canada}
 }
 ```
 
-## Acknowledgments 
 
 
 
