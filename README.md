@@ -70,15 +70,22 @@ In the original paper, the test set was corrupted a total of 5 times. After wait
 If you find our work useful in your research please consider citing our paper:
 
 ```
-@InProceedings{IQimpact2024,
-author="Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons",
-title="Investigating the Impact of Image Quality on Endoscopic AI Model Performance",
-booktitle="Applications of Medical Artificial Intelligence",
-year="2024",
-publisher="Springer Nature Switzerland",
-pages="32--41",
-isbn="978-3-031-47076-9"
+@inproceedings{IQimapact2024,
+author = {Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons},
+title = {Investigating the Impact of Image Quality on Endoscopic AI Model Performance},
+year = {2023},
+isbn = {978-3-031-47075-2},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+url = {https://doi.org/10.1007/978-3-031-47076-9_4},
+doi = {10.1007/978-3-031-47076-9_4},
+booktitle = {Applications of Medical Artificial Intelligence: Second International Workshop, AMAI 2023, Held in Conjunction with MICCAI 2023, Vancouver, BC, Canada, October 8, 2023, Proceedings},
+pages = {32–41},
+numpages = {10},
+keywords = {Image degradation, Robustness, DNN, Endoscopy},
+location = {Vancouver, BC, Canada}
 }
+
 ```
 
 ## Acknowledgments 
