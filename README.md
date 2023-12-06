@@ -70,7 +70,7 @@ In the original paper, the test set was corrupted a total of 5 times. After wait
 If you find our work useful in your research please consider citing our paper:
 
 ```
-@inproceedings{IQimapact2024,
+@inproceedings{IQimpact2024,
 author = {Jaspers, Tim J. M. and Boers, Tim G. W. and Kusters, Carolus H. J. and Jong, Martijn R. and Jukema, Jelmer B. and de Groof, Albert J. and Bergman, Jacques J. and de With, Peter H. N. and van der Sommen, Fons},
 title = {Investigating the Impact of Image Quality on Endoscopic AI Model Performance},
 year = {2023},
