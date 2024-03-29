@@ -89,7 +89,7 @@ def create_robustness_set(path_images, path_masks=None, max_level=5, min_level=1
                 corruption = corruption_options[idx_corruptions[nb]]
                 corruptions_names.append(corruption)
 
-                if corruption in ['Contrast', 'Saturation', 'Hue', 'Brightness']: #Brightness
+                if corruption in ['Contrast', 'Saturation', 'Hue', 'Brightness']:
                     factor = factor_2[random.randint(0, len(factor_2)-1)]
                 else:
                     factor = factor_1[random.randint(0, len(factor_1)-1)]
@@ -119,7 +119,6 @@ def create_robustness_set(path_images, path_masks=None, max_level=5, min_level=1
                 mask = mask.resize((1024, 1024), resample=Image.NEAREST)
                 path_mask = os.path.join(path_save_masks, name)
                 mask.save(path_mask)
-
 
         images_clean_total.extend(images_clean)
         images_corruption_total.extend(names)

@@ -4,8 +4,8 @@ This repository contains code used to create the robustness test set used in the
 
 - [Tim J.M. Jaspers *et al.*](https://link.springer.com/chapter/10.1007/978-3-031-47076-9_4) - Investigating the Impact of Image Quality on Endoscopic AI Model Performance (*Second Workshop on Applications of Medical AI (AMAI) - Satellite Event MICCAI 2023*)
 
-- Tim J.M. Jaspers *et al.* - Robustness evaluation of deep neural networks for endoscopic image analysis: insights
-and strategies *(Currently under Review)* 
+- [Tim J.M. Jaspers *et al.*](https://doi.org/10.1016/j.media.2024.103157) - Robustness evaluation of deep neural networks for endoscopic image analysis: insights
+and strategies *(Medical Image Analysis)* 
 
 # Abstract
 Computer-aided detection and diagnosis systems (CADe/CADx) in endoscopy are commonly trained using high-quality imagery, which is not representative for the heterogeneous input typically encountered in clinical practice. In endoscopy,
@@ -86,6 +86,19 @@ keywords = {Image degradation, Robustness, DNN, Endoscopy},
 location = {Vancouver, BC, Canada}
 }
 ```
+
+```
+@article{Robustness2024,
+title = {Robustness evaluation of deep neural networks for endoscopic image analysis: Insights and strategies},
+journal = {Medical Image Analysis},
+pages = {103157},
+year = {2024},
+issn = {1361-8415},
+doi = {https://doi.org/10.1016/j.media.2024.103157},
+url = {https://www.sciencedirect.com/science/article/pii/S1361841524000823},
+author = {Tim J.M. Jaspers and Tim G.W. Boers and Carolus H.J. Kusters and Martijn R. Jong and Jelmer B. Jukema and Albert J. {de Groof} and Jacques J. Bergman and Peter H.N. {de With} and Fons {van der Sommen}},
+keywords = {Deep learning, Endoscopy, Robustness, Image degradation, Image quality}
+}
 
 
 
