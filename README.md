@@ -1,6 +1,6 @@
 # Evaluating Robustness of Deep Neural Networks for Automated Cancer Detection in Endoscopy
 \
-This repository contains code used to create the robustness test set used in the following publication:
+This repository contains code used to create the robustness test set used in the following publications:
 
 - [Tim J.M. Jaspers *et al.*](https://link.springer.com/chapter/10.1007/978-3-031-47076-9_4) - Investigating the Impact of Image Quality on Endoscopic AI Model Performance (*Second Workshop on Applications of Medical AI (AMAI) - Satellite Event MICCAI 2023*)
 
