@@ -48,7 +48,7 @@ class JPGcompression:
         else:
             im.save(filename, format="JPEG", quality=1)
 
-    def __call__(self, img, mask, has_mask):
+    def __call__(self, img):
         compression_ratio = [4,12,20,28,34,40,46,50,54,58][self.severity]
         self.shape = img.size
         if self.shape[0] != 1024:
@@ -60,7 +60,7 @@ class JPGcompression:
         # Apply JPEG compression
         img_jpg = Image.open(self.save_path_jpg)
 
-        return img_jpg, mask, has_mask
+        return img_jpg
 
 
 class JPG2000compression:
