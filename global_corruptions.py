@@ -51,9 +51,6 @@ class JPGcompression:
     def __call__(self, img):
         compression_ratio = [4,12,20,28,34,40,46,50,54,58][self.severity]
         self.shape = img.size
-        if self.shape[0] != 1024:
-            img = img.resize((1024, 1024), resample=Image.LANCZOS)
-            self.shape = img.size
 
         quality = self.JPEGSaveWithTargetSize(img, self.save_path_jpg, compression_ratio)
 
